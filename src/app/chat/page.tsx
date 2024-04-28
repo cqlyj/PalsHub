@@ -1,5 +1,12 @@
+import { UserButton } from "@clerk/nextjs";
+
 const ChatPage = () => {
-  return <div>ChatPage</div>;
+  return (
+    <div>
+      ChatPage
+      <UserButton afterSignOutUrl="/"></UserButton>
+    </div>
+  );
 };
 
 export default ChatPage;
