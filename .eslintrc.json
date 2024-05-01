@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
   "extends": "next/core-web-vitals"
+=======
+  "extends": ["next/core-web-vitals", "prettier"]
+>>>>>>> cdb98252626139dd9dac3b4eba7c7aee07010516
 }
