@@ -2,6 +2,7 @@
 
 import AudioVolumeIndicator from "@/components/AudioVolumeIndicator";
 import Button, { buttonClassName } from "@/components/Button";
+import FlexibleCallLayout from "@/components/FlexibleCallLayout";
 import PermissionPrompt from "@/components/PermissionPrompt";
 import useLoadCall from "@/hooks/useLoadCall";
 import useStreamCall from "@/hooks/useStreamCall";
@@ -9,6 +10,7 @@ import { useUser } from "@clerk/nextjs";
 import {
   Call,
   CallControls,
+  CallingState,
   DeviceSettings,
   SpeakerLayout,
   StreamCall,
@@ -18,8 +20,9 @@ import {
   useCallStateHooks,
   useStreamVideoClient,
 } from "@stream-io/video-react-sdk";
-import { Link, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface MeetingPageProps {
   id: string;
@@ -95,7 +98,7 @@ function MeetingScreen() {
         </p>
       )}
       {setupComplete ? (
-        <SpeakerLayout></SpeakerLayout>
+        <CallUI></CallUI>
       ) : (
         <SetupUI onSetupComplete={handleSetupComplete}></SetupUI>
       )}
@@ -151,6 +154,18 @@ function SetupUI({ onSetupComplete }: SetupUIProps) {
   );
 }
 
+function CallUI() {
+  const { useCallCallingState } = useCallStateHooks();
+
+  const callingState = useCallCallingState();
+
+  if (callingState !== CallingState.JOINED) {
+    return <Loader2 className="mx-auto animate-spin"></Loader2>;
+  }
+
+  return <FlexibleCallLayout></FlexibleCallLayout>;
+}
+
 function UpcomingMeetingScreen() {
   const call = useStreamCall();
 
@@ -180,7 +195,7 @@ function MeetingEndedScreen() {
     <div className="flex flex-col items-center gap-6">
       <p className="font-bold">This meeting has ended</p>
       <Link href="/" className={buttonClassName}>
-        Go Home
+        Go home
       </Link>
     </div>
   );
