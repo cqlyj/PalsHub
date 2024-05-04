@@ -23,6 +23,7 @@ import {
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import RecordingsList from "@/components/RecordingsList";
 
 interface MeetingPageProps {
   id: string;
@@ -197,6 +198,10 @@ function MeetingEndedScreen() {
       <Link href="/" className={buttonClassName}>
         Go home
       </Link>
+      <div className="space-y-3">
+        <h2 className="text-center text-xl font-bold">Recordings</h2>
+        <RecordingsList></RecordingsList>
+      </div>
     </div>
   );
 }
